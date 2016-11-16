@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+	<!-- Custom Fonts --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+</head>
+<html lang="en">
+<body>
+	<form action="/authentication" method="post" id="login" enctype="multipart/form-data"></form>
+	<form action="/register" method="post" id="register" enctype="multipart/form-data"></form>
+	<div class="page-header col-md-6 col-md-offset-4">
+		<h1>Event Management System</h1>
+		<h2> <font color="red"> {{headerError}} </font> <h2>
+		<h2> <font color="green"> {{headerSuccess}} </font> <h2>
+	</div>
+	<div class="row col-md-5 col-md-offset-4">
+		<label for="username">User Name</label>
+		<div class="input-group col-md-6">
+			<span class="input-group-addon" id="username"></span>
+			<input type="text" form="login" class="form-control" name="username" placeholder="username" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<label for="password">Password</label>
+		<div class="input-group col-md-6">
+			<span class="input-group-addon" id="password"></span>
+			<input form="login" type="password" class="form-control" name="password" placeholder="password" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="login" class="btn btn-default">Login</button>
+		<button type="submit" form="register" class="btn btn-default">register</button>
+	</div>
+</body>
+</html>

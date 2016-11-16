@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+	<!-- Custom Fonts --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<script src="/static/validation.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+</head>
+<html lang="en">
+<body>
+	<form action="/createuser" method="post" id="register" enctype="multipart/form-data"></form>
+	<div class="page-header col-md-3 col-md-offset-4">
+		<h1>Register</h1>
+		<h2> <font color="red"> {{headerError}} </font> <h2>
+	</div>
+	<div class="row col-md-5 col-md-offset-4">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">User Name</span>
+			<input type="text" form="register" class="form-control" name="username" id="username" placeholder="user name" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">First Name</span>
+			<input form="register" type="text" class="form-control" name="firstname" id="firstname" placeholder="first name" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Last Name</span>
+			<input form="register" type="text" class="form-control" name="lastname" id="lastname" placeholder="last name" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Password</span>
+			<input form="register" type="password" class="form-control" name="password" id="password" placeholder="password" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-9 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Date of Birth</span>
+			<input form="register" type="text" class="form-control" name="dob" id="dob" placeholder="Please input in the following form: mm/dd/yyyy" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<label for="gender">Gender</label>
+			<label class="radio-inline col-md-offset-1">
+		      <input type="radio" id="gender" form="register" name="gender" value="f" checked>Female
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" id="gender" form="register" name="gender" value="m">Male
+		    </label>
+		</div>
+	</div>
+	
+	<div class="row col-md-9 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Address</span>
+			<input form="register" type="text" class="form-control" name="address" id="address" placeholder="address" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-10">
+			<label for="usertype">User Type</label>
+			<label class="radio-inline col-md-offset-1">
+		      <input type="radio" form="register" id="usertype" name="usertype" value="regular" checked>Event Planner
+		    </label>
+		    <label class="radio-inline">
+		      <input type="radio" form="register" id="usertype" name="usertype" value="venue owner">Venue Manager
+		    </label>
+		</div>
+	</div>
+	
+	<div class="row col-md-9 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Email</span>
+			<input form="register" type="text" class="form-control" name="email" id="email" placeholder="email" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Phone</span>
+			<input form="register" type="text" class="form-control" name="phone" id="phone" placeholder="phone" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="register" class="btn btn-default">Submit</button>
+	</div>
+</body>
+</html>

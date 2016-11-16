@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<head>
+	<!-- Custom Fonts --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<script src="/static/eventpanel.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+</head>
+<html lang="en">
+<body>
+	{% block javascript %}
+	    <script type="text/javascript">
+	        {% include "whichevent.js" %}
+	    </script>
+	    <!-- The contents of myscript.js will be loaded inside the script tag -->
+	{% endblock %}
+
+
+
+	<form action="/editevent" method="post" id="edit" enctype="multipart/form-data"></form>
+	<form action="/addevent" method="post" id="add" enctype="multipart/form-data"></form>
+	<form action="/invite" method="post" id="invite" enctype="multipart/form-data"></form>
+	<form action="/request" method="post" id="request" enctype="multipart/form-data"></form>
+	<form action="/inventory" method="post" id="inventory" enctype="multipart/form-data"></form>
+
+	<div class="page-header col-md-6 col-md-offset-3">
+		<h1>Welcome {{name}}!</h1>
+	</div>
+	<input type="hidden" id="username" form="edit" name="username" value="{{name}}">
+	<input type="hidden" id="username" form="add" name="username" value="{{name}}">
+	<input type="hidden" id="username" form="invite" name="username" value="{{name}}">
+	<input type="hidden" id="username" form="request" name="username" value="{{name}}">
+	<input type="hidden" id="username" form="inventory" name="username" value="{{name}}">
+
+
+	<div class="row col-md-6 col-md-offset-3">
+		<ul class="nav nav-tabs" id="navbar">
+		  <li role="presentation"><a href="#">My Events</a></li>
+		  <li role="presentation"><a href="#">Create Event</a></li>
+		  <li role="presentation" style="float:right"><a href="/signout">Sign Out</a></li>
+		</ul>
+	</div>
+
+	<div class="container" id="my_event">
+	<ul class="list-group col-md-6 col-md-offset-3 top-buffer" id="which_event">
+	  {% for key, value in events.items() %}
+	  <!--<li class=""><a href="#">{{value["title"]}}</a></li>-->
+	  <li class="" ><a href="#">Event {{key}}</a> {{value["title"]}}</li>
+	  {% endfor %}
+	</ul>
+
+
+	<div class="btn-group btn-group-justified" role="group" aria-label="..." id="options">
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-default">Edit Event</button>
+	  </div>
+	  <div class="btn-group" role="group">
+	    <button type="submit" form="invite" class="btn btn-default">Manage Invitation</button>
+	  </div>
+	  <div class="btn-group" role="group">
+	    <button type="submit" form="request" class="btn btn-default">Request Time Slot</button>
+	  </div>
+	  <div class="btn-group" role="group">
+	    <button type="submit" form="inventory" class="btn btn-default">Manage Inventory</button>
+	  </div>
+	</div>
+
+	<input name="selected_event" type="hidden" id="selected_event_edit">
+	<input form="invite" name="selected_event" type="hidden" id="selected_event_invite">
+	<input form="request" name="selected_event" type="hidden" id="selected_event_request">
+	<input form="inventory" name="selected_event" type="hidden" id="selected_event_inventory">
+
+
+
+
+	<div class="container" id="event_on_change">
+	{% for key, value in events.items() %}
+	{% set id="event_on_change"+key|string %}
+	<div class="container" id="{{id}}">
+	<div class="row col-md-4 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<!--<span class="input-group-addon">Event Id</span>-->
+			<input type="hidden" id="eidform" form="edit" name="eid" value="{{key}}" disabled='false'>
+			<!--<input type="text" id="eid" class="form-control" form="edit" name="eid" value="{{key}}" disabled>-->
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Title</span>
+			<input form="edit" type="text" class="form-control" name="title" id="title" aria-describedby="basic-addon1" value="{{value['title']}}" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Description</span>
+			<input form="edit" type="text" class="form-control" name="description" id="description" value="{{value['description']}}" aria-describedby="basic-addon1" disabled='false'>
+		</div>
+	</div>
+	<!--<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Organizer</span>
+			<input form="edit" type="text" class="form-control" name="organizer" id="organizer" value="{{value['organizer']}}" aria-describedby="basic-addon1" disabled>
+		</div>
+	</div>-->
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Budget</span>
+			<input form="edit" type="text" class="form-control" name="budget" id="budget" value="{{value['budget']}}" aria-describedby="basic-addon1" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="edit" class="btn btn-default" name='editbutton' value='edit'>Edit</button>
+		<button type="submit" form="edit" class="btn btn-default" name='editbutton' value='delete'>Delete</button>
+	</div>
+	</div>
+	{% endfor %}
+	</div>
+	</div>
+
+
+
+	<div class="container" id="new_event">
+	<!--
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Event Id</span>
+			<input type="text" form="add" class="form-control" name="eid" id="eidnew" aria-describedby="basic-addon1" placeholder="eid">
+		</div>
+	</div>
+	-->
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Tile</span>
+			<input form="add" type="text" class="form-control" name="title" id="titlenew" aria-describedby="basic-addon1" placeholder="title" required>
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Description</span>
+			<input form="add" type="text" class="form-control" name="description" id="descriptionnew" placeholder="description" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<!--
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Organizer</span>
+			<input form="add" type="text" class="form-control" name="organizer" id="organizernew" placeholder="name" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	-->
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Budget</span>
+			<input form="add" type="text" class="form-control" name="budget" id="budgetnew" placeholder="budget" aria-describedby="basic-addon1" required>
+		</div>
+	</div>
+	<!--
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Dress Code</span>
+			<input form="add" type="text" class="form-control" name="dresscode" id="dresscodenew" placeholder="dresscode" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	-->
+	<!--
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Sponsor</span>
+			<input form="add" type="text" class="form-control" name="sponsor" id="sponsornew" placeholder="sponsor" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	-->
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="add" class="btn btn-default">Submit</button>
+	</div>
+	</div>
+
+
+	<!-- <div class="container" id="new_venue">
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Venue Id</span>
+			<input type="text" form="register" class="form-control" name="vid" id="vidnew" aria-describedby="basic-addon1" placeholder="vid">
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Name</span>
+			<input form="register" type="text" class="form-control" name="vname" id="vname" aria-describedby="basic-addon1" placeholder="name">
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Address</span>
+			<input form="register" type="text" class="form-control" name="address" id="address" placeholder="address" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Capacity</span>
+			<input form="register" type="text" class="form-control" name="capacity" id="capacity" placeholder="capacity" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Facility</span>
+			<input form="register" type="text" class="form-control" name="facility" id="facility" placeholder="facility" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="register" class="btn btn-default">Submit</button>
+	</div>
+	</div>
+
+
+
+	<div class="container" id="my_venue">
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Venue Id</span>
+			<input type="text" form="manage" class="form-control" name="vid" id="vidm" aria-describedby="basic-addon1" value="{{vid}}" placeholder="vid" disabled>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Name</span>
+			<input form="manage" type="text" class="form-control" name="vname" id="vnamem" aria-describedby="basic-addon1" placeholder="name">
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Address</span>
+			<input form="manage" type="text" class="form-control" name="address" id="addressm" placeholder="address" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Capacity</span>
+			<input form="manage" type="text" class="form-control" name="capacity" id="capacitym" placeholder="capacity" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Facility</span>
+			<input form="manage" type="text" class="form-control" name="facility" id="facilitym" placeholder="facility" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="manage" class="btn btn-default">Submit</button>
+	</div>
+	</div> -->
+</body>
+</html>

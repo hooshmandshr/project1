@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<script src="/static/invitepanel.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+</head>
+<html lang="en">
+<body>
+	{% block javascript %}
+	    <script type="text/javascript">
+	        {% include "whichinvite.js" %}
+	    </script>
+	    <!-- The contents of myscript.js will be loaded inside the script tag -->
+	{% endblock %}
+	<div class="page-header col-md-6 col-md-offset-3">
+		<h1><b>{{event_name}}</b></h1>
+		<p>{{event_description}}<p>
+	</div>
+	<form action="/newinvite" method="post" id="newinvite" enctype="multipart/form-data"></form>
+	<form action="/editinvite" method="post" id="editinvite" enctype="multipart/form-data"></form>
+	<!--
+	<input type="hidden" id="username" form="newinvite" name="username" value="{{name}}">
+	<input type="hidden" id="username" form="editinvite" name="username" value="{{name}}">
+	-->
+	<input type="hidden" id="selected_invite">
+
+	<div class="row col-md-6 col-md-offset-3">
+		<ul class="nav nav-tabs" id="navbar">
+		  <li role="presentation"><a href="#">Create New Invite</a></li>
+		  <li role="presentation"><a href="#">Edit Invitations</a></li>
+		  <li role="presentation"><a href="/eventplanner">Events</a></li>
+		  <li role="presentation" style="float:right"><a href="/signout">Sign Out</a></li>
+		</ul>
+	</div>
+
+
+	<div class="container" id="my_invite">
+		<ul class="list-group col-md-1 col-md-offset-5 top-buffer" id="which_invite">
+		  {% for key, value in invite.items() %}
+		  <li class=""><a href="#">Invite: {{key}}</a></li>
+		  {% endfor %}
+		</ul>
+		<div class="container" id="invite_on_change">
+			{% for key, value in invite.items() %}
+			{% set id="invite_on_change"+key|string %}
+		<div class="container" id="{{id}}">
+		<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<!--<span class="input-group-addon">Invite Id</span>-->
+			<input type="hidden" form="editinvite" class="form-control" name="invidn" id="invid" aria-describedby="basic-addon1" value="{{key}}" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<!--<span class="input-group-addon">Event Id</span>-->
+			<input form="editinvite" type="hidden" class="form-control" name="evidn" aria-describedby="basic-addon1" value="{{value['eid']}}" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">User name</span>
+			<input form="editinvite" type="text" class="form-control" name="username" value="{{value['username']}}" aria-describedby="basic-addon1" disabled='false' readonly>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Invitation Title</span>
+			<input form="editinvite" type="text" class="form-control" name="title" value="{{value['title']}}" aria-describedby="basic-addon1" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Message</span>
+			<input form="editinvite" type="text" class="form-control" name="message" value="{{value['message']}}" aria-describedby="basic-addon1" disabled='false'>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Preferences</span>
+			<input form="editinvite" type="text" class="form-control" name="preferences" value="{{value['preference']}}" aria-describedby="basic-addon1" readonly>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Attending</span>
+			<input form="editinvite" type="text" class="form-control" name="attending" value="{{value['attending']}}" aria-describedby="basic-addon1" readonly>
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="editinvite" class="btn btn-default" name='editbutton' value='edit'>Edit</button>
+		<button type="submit" form="editinvite" class="btn btn-default" name='editbutton' value='delete'>Delete</button>
+	</div>
+	</div>
+	{% endfor %}
+	</div>
+	</div>
+
+
+
+
+
+	<div class="container" id="new_invite">
+	<!--
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Invite Id</span>
+			<input type="text" form="newinvite" class="form-control" name="invidn" id="invid" aria-describedby="basic-addon1" placeholder="Invite Id">
+		</div>
+	</div>
+	-->
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<!--<span class="input-group-addon">Event Id</span>-->
+			<input form="newinvite" type="hidden" class="form-control" name="evidn" aria-describedby="basic-addon1" value="{{eid}}">
+		</div>
+	</div>
+	<div class="row col-md-12 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">User name</span>
+			<input form="newinvite" type="text" class="form-control" name="username" placeholder="User name" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Title</span>
+			<input form="newinvite" type="text" class="form-control" name="title" placeholder="title" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Message</span>
+			<input form="newinvite" type="text" class="form-control" name="message" placeholder="message" aria-describedby="basic-addon1">
+		</div>
+	</div>
+	<!--
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Preferences</span>
+			<input form="newinvite" type="text" class="form-control" name="preferences" placeholder="preferences" aria-describedby="basic-addon1" disabled>
+		</div>
+	</div>
+	<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Attending</span>
+			<input form="newinvite" type="text" class="form-control" name="attending" placeholder="attending" aria-describedby="basic-addon1" disabled>
+		</div>
+	</div>
+	-->
+	<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" form="newinvite" class="btn btn-default">Create</button>
+	</div>
+	</div>
+
+
+
+</body>
+</html>

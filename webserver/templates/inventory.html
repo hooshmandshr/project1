@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<script src="/static/invitepanel.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+</head>
+<html lang="en">
+<body>
+<div class="page-header col-md-6 col-md-offset-3">
+	<h1>Inventory</h1>
+</div>
+
+<form action="/newitem" method="post" id="newitem" enctype="multipart/form-data"></form>
+
+<!--<input type="hidden" id="username" form="newitem" name="username" value="{{name}}">-->
+<input type="hidden" id="eid" form="newitem" name="eid" value="{{eid}}">
+
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+<table style="width:100%">
+		<tr>
+			<th>select</th>
+			<th>barcode</th>
+			<th>item</th> 
+			<th>suplier</th>
+			<th>price</th>
+			<th>quantity</th>
+			<th>memo</th>
+		</tr>
+{% for key,value in inventory.items() %}
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+		<tr>
+			<th><input type="radio" name="removeitem" form="newitem" value="{{key}}"></th>
+			<th>{{value['barcode']}}</th>
+			<th>{{value['item']}}</th> 
+			<th>{{value['suplier']}}</th>
+			<th>{{value['price']}}</th>
+			<th>{{value['quantity']}}</th>
+			<th>{{value['memo']}}</th>
+		</tr>
+	<!--
+	<input type="radio" name="newslot" form="requestnew" value="{{value['id']}}">New Time Slot: {{value}}</p>
+	-->
+</div>
+{% endfor %}
+</table>
+</div>
+
+
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" name="action" value="remove" form="newitem" class="btn btn-default">Remove</button>
+		<button type="submit" name="action" value="cancel" form="newitem" class="btn btn-default">Cancel</button>
+</div>
+
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+<table style="width:100%">
+		<tr>
+			<th>select</th>
+			<th>barcode</th>
+			<th>item</th> 
+			<th>suplier</th>
+			<th>price</th>
+			<th>instock</th>
+		</tr>
+{% for key, value in stocks.items() %}
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+		<tr>
+			<th><input type="radio" name="newitem" form="newitem" value="{{key}}"></th>
+			<th>{{value['barcode']}}</th>
+			<th>{{value['item']}}</th> 
+			<th>{{value['suplier']}}</th>
+			<th>{{value['price']}}</th>
+			<th>{{value['instock']}}</th>
+		</tr>
+	<!--
+	<input type="radio" name="newslot" form="requestnew" value="{{value['id']}}">New Time Slot: {{value}}</p>
+	-->
+</div>
+{% endfor %}
+</table>
+</div>
+
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Quantity</span>
+			<input form="newitem" type="text" class="form-control" name="quantity" value="1" aria-describedby="basic-addon1">
+		</div>
+</div>
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+		<div class="input-group col-md-6">
+			<span class="input-group-addon">Memo</span>
+			<input form="newitem" type="text" class="form-control" name="memo" placeholder="memo" aria-describedby="basic-addon1">
+		</div>
+</div>
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" name="action" value="add" form="newitem" class="btn btn-default">Add</button>
+</div>
+
+</body>
+</html>

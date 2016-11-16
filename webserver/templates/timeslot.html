@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   
+	<script src="/static/invitepanel.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/login.css"> 
+	<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
+	</style>
+</head>
+<html lang="en">
+<body>
+<div class="page-header col-md-6 col-md-offset-3">
+	<h1>Time Slot</h1>
+</div>
+
+<form action="/requestnewtimeslot" method="post" id="requestnew" enctype="multipart/form-data"></form>
+
+<input type="hidden" id="username" form="requestnew" name="username" value="{{name}}">
+<input type="hidden" id="eid" form="requestnew" name="eid" value="{{eid}}">
+
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+	<div class="input-group col-md-6">
+		<span class="input-group-addon">From</span>
+		<input type="text" class="form-control" value="{{assigned['datefrom']}}" aria-describedby="basic-addon1" disabled>
+	</div>
+</div>
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+	<div class="input-group col-md-6">
+		<span class="input-group-addon">To</span>
+		<input type="text" class="form-control" value="{{assigned['dateto']}}" aria-describedby="basic-addon1" disabled>
+	</div>
+</div>
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+	<div class="input-group col-md-6">
+		<span class="input-group-addon">Venue</span>
+		<input type="text" class="form-control" value="{{assigned['name']}}" aria-describedby="basic-addon1" disabled>
+	</div>
+</div>
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+	<div class="input-group col-md-6">
+		<span class="input-group-addon">Capacity</span>
+		<input type="text" class="form-control" value="{{assigned['capacity']}}" aria-describedby="basic-addon1" disabled>
+	</div>
+</div>
+<div class="row col-md-7 col-md-offset-4 top-buffer">
+	<div class="input-group col-md-6">
+		<span class="input-group-addon">Facilities</span>
+		<input type="text" class="form-control" value="{{assigned['facilities']}}" aria-describedby="basic-addon1" disabled>
+	</div>
+</div>
+
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+<table style="width:100%">
+		<tr>
+			<th>select</th>
+			<th>from</th>
+			<th>to</th> 
+			<th>venue</th>
+		</tr>
+{% for key, value in totalslot.items() %}
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+		<tr>
+			<th><input type="radio" name="newslot" form="requestnew" value="{{key}}"></th>
+			<th>{{value['datefrom']}}</th>
+			<th>{{value['dateto']}}</th> 
+			<th>{{value['name']}}</th>
+		</tr>
+	<!--
+	<input type="radio" name="newslot" form="requestnew" value="{{value['id']}}">New Time Slot: {{value}}</p>
+	-->
+</div>
+{% endfor %}
+</table>
+</div>
+
+
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+		<button type="submit" name='actbutton' value='reserve' form="requestnew" class="btn btn-default">Reserve</button>
+		<button type="submit" name='actbutton' value='cancel' form="requestnew" class="btn btn-default">Cancel</button>
+	</div>
+
+</body>
+</html>

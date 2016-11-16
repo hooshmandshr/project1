@@ -1,0 +1,72 @@
+#gender backup
+
+	
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+<div style="display: table, width:100%;">
+	<div style="display: table-row;">
+		<div class="tabcontent" style="display: table-cell;">Select</div> </ >
+		<div class="tabcontent" style="display: table-cell;">To </div>
+		<div class="tabcontent" style="display: table-cell;">From </div>
+		<div class="tabcontent" style="display: table-cell;">Venue </div>
+	</div>
+
+	{% for key, value in totalslot.items() %}
+	<div style="display: table-row;">
+		<div style="display: table-cell;">
+			<input type="radio" name="newslot" form="requestnew" value="{{key}}">
+		</div>
+		<div class="tabcontent" style="display: table-cell;">{{value['datefrom']}} </div>
+		<div class="tabcontent" style="display: table-cell;">{{value['dateto']}} </div>
+		<div class="tabcontent" style="display: table-cell;">{{value['name']}} </div>
+	</div>
+	{% endfor %}
+</div>
+
+
+##############
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+	<p>From: {{assigned['datefrom']}}</p>
+	<p>To : {{assigned['dateto']}}</p>
+	<p>Venue: {{assigned['name']}}</p>
+</div>
+
+
+{% for key, value in stocks.items() %}
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+	<input type="radio" name="newitem" form="newitem" value="{{key}}">New Item: {{value}}</p>
+</div>
+{% endfor %}
+
+{% for key,value in inventory.items() %}
+<div class="row col-md-5 col-md-offset-4 top-buffer">
+	<p>Current Inventory Item: {{value}}</p>
+</div>
+{% endfor %}
+
+
+################
+	
+	
+<div class="">
+<table style="width:100%">
+		<tr>
+			<th>select</th>
+			<th>from</th>
+			<th>to</th> 
+			<th>venue</th>
+		</tr>
+{% for key, value in totalslot.items() %}
+<div class="row col-md-8 col-md-offset-2 top-buffer">
+		<tr>
+			<th><input type="radio" name="newslot" form="requestnew" value="{{key}}"></th>
+			<th>{{value['datefrom']}}</th>
+			<th>{{value['dateto']}}</th> 
+			<th>{{value['name']}}</th>
+		</tr>
+	<!--
+	<input type="radio" name="newslot" form="requestnew" value="{{value['id']}}">New Time Slot: {{value}}</p>
+	-->
+</div>
+{% endfor %}
+</table>
+</div>
